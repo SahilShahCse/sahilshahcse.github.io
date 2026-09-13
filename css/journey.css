@@ -1,0 +1,67 @@
+/* Experience: a topographic journey map. Rust field, ink contours, a dashed trail, pinned cards with tails. */
+.jm { --map-field: #a95428; --map-line: #33361c; --card: #fffdf3; --line: #33361c; --ink: #26301f; --ink-2: #4a4f36; --rust: #a95428; --pine: #3f5a2e; --gold: #f9b40e; --vbcq: .06944cqw; position: relative; padding: 0; margin: -30px calc(var(--gutter) * -1) 0; background: var(--map-field); }
+.jm__head { clip: rect(0 0 0 0); white-space: nowrap; border: 0; width: 1px; height: 1px; margin: -1px; padding: 0; position: absolute; overflow: hidden; }
+.jm__panel { position: relative; width: 100%; aspect-ratio: 1440 / 1000; container-type: inline-size; overflow: hidden; }
+.jm__map { width: 100%; height: 100%; display: block; }
+.jm__terrain, .jm__names { opacity: 0; transition: opacity 1.2s cubic-bezier(.16,1,.3,1); }
+.jm__names { transition-delay: .35s; }
+.jm.is-in .jm__terrain, .jm.is-in .jm__names { opacity: 1; }
+.jm__contour { fill: none; stroke: var(--map-line); stroke-width: 1.1px; opacity: .3; }
+.jm__contourIndex { fill: none; stroke: var(--map-line); stroke-width: 1.35px; opacity: .51; }
+.jm__grat { fill: none; stroke: var(--map-line); stroke-width: 1.3px; stroke-dasharray: 16 7 3 7; opacity: .8; }
+.jm__lakeShore { fill: none; stroke: var(--map-line); stroke-width: 1.5px; }
+.jm__lakeHatch { fill: none; stroke: var(--map-line); stroke-width: .9px; opacity: .85; }
+.jm__river { fill: none; stroke: var(--map-line); stroke-linecap: round; }
+.jm__peakMark { fill: var(--map-line); }
+.jm__peakMinor { fill: none; stroke: var(--map-line); stroke-width: 1.2px; stroke-linejoin: round; }
+.jm__sheetTitle { font-family: "Rubik", "Arial Narrow", Impact, sans-serif; font-weight: 800; letter-spacing: .32em; fill: #f5edd8; paint-order: stroke; stroke: var(--map-field); stroke-width: 7px; stroke-linejoin: round; font-size: 44px; }
+.jm__sheetSub { font-family: "Nunito Sans", system-ui, sans-serif; letter-spacing: .34em; fill: #f0e6cc; paint-order: stroke; stroke: var(--map-field); stroke-width: 4px; stroke-linejoin: round; font-size: 11px; font-weight: 700; }
+.jm__sheetRule { stroke: #f0e6cc; stroke-width: 1.4px; opacity: .9; }
+.jm__region, .jm__valley, .jm__water, .jm__lakeName, .jm__peakName, .jm__peakElev { font-family: "Nunito Sans", system-ui, sans-serif; fill: var(--map-line); paint-order: stroke; stroke: var(--map-field); stroke-width: 3.5px; stroke-linejoin: round; }
+.jm__region { letter-spacing: .42em; stroke-width: 4.5px; opacity: .92; font-size: 19px; font-weight: 700; }
+.jm__valley { letter-spacing: .55em; opacity: .85; font-size: 13.5px; font-weight: 700; }
+.jm__water { letter-spacing: .28em; font-size: 12.5px; font-weight: 700; }
+.jm__lakeName { letter-spacing: .3em; font-size: 11px; font-weight: 700; }
+.jm__peakName { letter-spacing: .04em; font-size: 11.5px; font-weight: 700; }
+.jm__peakElev { letter-spacing: .14em; opacity: .85; font-size: 9.5px; font-weight: 600; }
+.jm__trailCasing { fill: none; stroke: var(--map-field); stroke-width: 6px; }
+.jm__trail { fill: none; stroke: #f4ead0; stroke-width: 2.5px; stroke-dasharray: 9 8; }
+.jm__dot { stroke: var(--map-line); stroke-width: 2px; }
+.jm__dotGlyph { font-family: "Nunito Sans", system-ui, sans-serif; fill: var(--map-line); font-size: 11px; font-weight: 800; }
+.jm__overlay { pointer-events: none; position: absolute; inset: 0; }
+.jm__cardSeat { width: calc(var(--vbcq) * 200); transform: translateY(var(--seat-y, 0%)); pointer-events: none; position: absolute; }
+.jm__pinCard { pointer-events: auto; gap: max(2px, calc(var(--vbcq) * 4)); background: var(--card); border: 1px solid var(--line); width: 100%; padding: max(7px, calc(var(--vbcq) * 11)) max(8px, calc(var(--vbcq) * 12)); text-align: left; border-radius: 4px; flex-direction: column; transition: transform .34s cubic-bezier(.34,1.45,.64,1), box-shadow .34s cubic-bezier(.34,1.45,.64,1); display: flex; position: relative; box-shadow: 0 5px #26301f1f; }
+.jm__pinCard:hover { z-index: 40; transform: translateY(-3px); box-shadow: 0 8px #26301f1a; }
+.jm__pinCardHere { --card: var(--gold); --line: color-mix(in srgb, var(--gold) 55%, var(--ink)); }
+.jm__pinCardHere .jm__cardMeta { color: var(--ink); }
+.jm__pinCardHere .jm__cardQuip { color: var(--pine); }
+.jm__tailSvg { pointer-events: none; position: absolute; overflow: visible; }
+.jm__tailShadow { fill: #26301f1f; }
+.jm__tailFill { fill: var(--card); }
+.jm__tailEdge { fill: none; stroke: var(--line); stroke-width: 1px; }
+.jm__cardName { font-family: "Rubik", "Arial Narrow", Impact, sans-serif; font-weight: 800; text-transform: uppercase; font-size: max(12px, calc(var(--vbcq) * 17)); letter-spacing: .03em; color: var(--ink); line-height: 1; }
+.jm__cardMeta { font-family: "Nunito Sans", system-ui, sans-serif; font-size: max(8px, calc(var(--vbcq) * 9)); letter-spacing: .1em; text-transform: uppercase; color: var(--rust); font-weight: 700; }
+.jm__cardQuip { font-family: "Caveat", cursive; font-size: max(13px, calc(var(--vbcq) * 17)); color: var(--ink-2); line-height: 1.15; }
+.jm__cardCta { margin-top: max(2px, calc(var(--vbcq) * 3)); font-family: "Nunito Sans", system-ui, sans-serif; font-size: max(9px, calc(var(--vbcq) * 9)); letter-spacing: .1em; text-transform: uppercase; color: #fdf8e7; background: var(--ink); padding: max(5px, calc(var(--vbcq) * 7)) max(8px, calc(var(--vbcq) * 12)); border-radius: 3px; align-self: flex-start; font-weight: 700; text-decoration: none; transition: transform .25s cubic-bezier(.34,1.45,.64,1); box-shadow: 0 2px #26301f47; }
+.jm__cardCta:hover { transform: translateY(-1.5px); }
+.jm__cardCta:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+/* torn paper edges: the cream page shows through a rough tear at the top and bottom of the map, and the map casts a shadow onto it */
+.jm__tear { position: absolute; left: 0; right: 0; height: 100px; z-index: 3; pointer-events: none; }
+.jm__tear svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.jm__tear rect { fill: var(--cream); }
+.jm__tear--top { top: -1px; clip-path: inset(0 0 -120px 0); } .jm__tear--top rect { fill: var(--cream); } .jm__tear--top svg { filter: drop-shadow(0 6px 7px rgba(20,20,20,.4)); }
+.jm__tear--bot { bottom: -1px; clip-path: inset(-120px 0 0 0); } .jm__tear--bot svg { filter: drop-shadow(0 -6px 7px rgba(20,20,20,.35)); }
+.jm__list { display: none; }
+@media (max-width: 699px) {
+  .jm { padding: 56px 24px; }
+  .jm__head { clip: auto; white-space: normal; width: auto; height: auto; margin: 0 0 18px; position: static; overflow: visible; }
+  .jm__head h2 { font-family: "Rubik", sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: #f5edd8; font-size: 1.9rem; line-height: 1; margin: 0; }
+  .jm__head p { font-family: "Nunito Sans", sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #f0e6cc; font-size: .7rem; font-weight: 700; margin: 6px 0 0; }
+  .jm__panel, .jm__tear { display: none; }
+  .jm__list { display: flex; flex-direction: column; gap: 1.1rem; margin: 0; padding: 0; list-style: none; }
+  .jm__list li { border-left: 3px solid #f4ead0; flex-direction: column; gap: 2px; padding-left: 14px; display: flex; color: #f5edd8; }
+  .jm__listName { font-family: "Rubik", sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; font-size: 1.15rem; }
+  .jm__listMeta { font-family: "Nunito Sans", sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #f9b40e; font-size: .68rem; font-weight: 700; }
+  .jm__listQuip { font-family: "Caveat", cursive; color: #f0e6cc; font-size: 1.3rem; }
+}
+@media (prefers-reduced-motion: reduce) { .jm__terrain, .jm__names { opacity: 1; transition: none; } }
