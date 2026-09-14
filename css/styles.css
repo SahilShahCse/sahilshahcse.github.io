@@ -405,3 +405,27 @@ main::before { content: ""; position: absolute; left: 0; right: 0; top: var(--se
   .mail__hint { top: calc(100% - 244px + 60px); }
   .mail__sent { bottom: 120px; }
 }
+
+/* ---- phone pass: the top bar and the hero thumbnail row at 480px and under ---- */
+@media (max-width: 480px) {
+  /* the four nav links ran past CONTACT on a 360px phone: tighter type, tighter gaps, and the row may scroll rather than clip */
+  .nav { gap: 10px; padding-left: 14px; padding-right: 14px; }
+  .nav__logo { font-size: 1.05rem; white-space: nowrap; }
+  .nav.is-tight .nav__logo { font-size: 1rem; }
+  .nav__links { gap: 13px; font-size: .68rem; letter-spacing: .08em; min-width: 0; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+  .nav__links::-webkit-scrollbar { display: none; }
+  .nav__links a { white-space: nowrap; }
+
+  /* five thumbnails across 360px left them 57px wide and unreadable: one swipeable row instead */
+  .arrivals ul { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 96px; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 4px; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scrollbar-width: none; -ms-overflow-style: none; }
+  .arrivals ul::-webkit-scrollbar { display: none; }
+  .arrivals li { scroll-snap-align: start; }
+  .arrivals b { font-size: .72rem; }
+  .arrivals small { font-size: .58rem; }
+}
+
+/* the narrowest phones still in use (iPhone SE, 320px) need one more step down */
+@media (max-width: 380px) {
+  .nav__logo, .nav.is-tight .nav__logo { font-size: .95rem; }
+  .nav__links { gap: 10px; font-size: .62rem; letter-spacing: .04em; }
+}
