@@ -1,12 +1,4 @@
 (function () {
-  /* the curtain plays once per visit, never on a return within the session */
-  var curtain = document.querySelector('.curtain');
-  if (curtain) {
-    var seen = false; try { seen = sessionStorage.getItem('curtain') === '1'; } catch (e) {}
-    if (seen || matchMedia('(prefers-reduced-motion: reduce)').matches) { curtain.classList.add('is-off'); }
-    else { document.documentElement.classList.add('has-curtain'); try { sessionStorage.setItem('curtain', '1'); } catch (e) {} curtain.addEventListener('animationend', function (e) { if (e.animationName === 'curtain-lift') curtain.classList.add('is-off'); }); }
-  }
-
   var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   document.querySelectorAll('[data-year]').forEach(function (n) { n.textContent = new Date().getFullYear(); });
@@ -117,7 +109,7 @@
       [[0, 1], [1, 2], [2, 3], [1, 4], [3, 4], [0, 5], [5, 4]].forEach(function (pr) { var a = pts[pr[0]], b = pts[pr[1]], mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2 + 26; d += '<path d="M' + a[0] + ' ' + a[1] + ' Q' + mx + ' ' + my + ' ' + b[0] + ' ' + b[1] + '"/>'; });
       string.innerHTML = d;
     };
-    var delay = document.documentElement.classList.contains('has-curtain') ? 3200 : 1100;
+    var delay = 1100;
     setTimeout(function () { strings(); tbl.classList.add('is-in'); }, delay);
     addEventListener('resize', strings);
   }
@@ -135,7 +127,7 @@
       setTimeout(function () { mail.scrollIntoView({ block: 'end', behavior: 'smooth' }); }, 1400);
     };
     mail.addEventListener('click', function (e) { if (!e.target.closest('.mail__reply, .mail__letter')) openMail(); });
-    mail.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMail(); } });
+    mail.addEventListener('keydown', function (e) { if (mail.classList.contains('is-open')) return; if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMail(); } });
     /* posting the sheet: the note is saved to the portfolio's message table (insert-only key); a trigger DMs Sahil on Slack */
     var POST_URL = 'https://dlciivohmpfqlqbazrrc.supabase.co/rest/v1/portfolio_messages';
     var POST_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRsY2lpdm9obXBmcWxxYmF6cnJjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5MzQzNTksImV4cCI6MjEwMjUxMDM1OX0.e5xgHMwYhqSfV3ePW1-IyvliTioSYc_1Xn89RhJU61g';
